@@ -68,6 +68,11 @@ public class AliPayPainter extends Painter {
         canvas.drawCircle(point.x, point.y, point.radius, errorPaint);
     }
 
+    @Override
+    public void drawRightPoint(Point point, Canvas canvas, Paint errorPaint) {
+
+    }
+
     /**
      * 绘制连线
      *

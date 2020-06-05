@@ -29,6 +29,7 @@ public abstract class Painter {
     public static final int NORMAL_COLOR = Color.GRAY; // 正常状态画笔颜色
     public static final int PRESS_COLOR = Color.BLACK; // 按压状态画笔颜色
     public static final int ERROR_COLOR = Color.RED; // 出错状态画笔颜色
+    public static final int RIGHT_COLOR = Color.GREEN; // 正确状态画笔颜色
 
     /**
      * 正常 & 按下 & 错误状态画笔
@@ -36,6 +37,7 @@ public abstract class Painter {
     public final Paint mNormalPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     public final Paint mPressPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     public final Paint mErrorPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    public final Paint mRightPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     /**
      * 正常 & 按下 & 错误等状态下的图片（根据图片资源ID获取，进行缩放、圆形剪裁之后的位图）
@@ -62,7 +64,7 @@ public abstract class Painter {
      * @param errorImageId    出错状态图片资源Id
      */
     public void attach(GestureLockView gestureLockView, Context context,
-                       int normalColor, int pressColor, int errorColor,
+                       int normalColor, int pressColor, int errorColor, int rightColor,
                        int normalImageId, int pressImageId, int errorImageId) {
         // 1.关联手势解锁视图
         mGestureLockView = gestureLockView;
@@ -70,6 +72,7 @@ public abstract class Painter {
         setNormalColor(normalColor);
         setPressColor(pressColor);
         setErrorColor(errorColor);
+        setRightColor(rightColor);
         // 3.设置Painter图片引用
         setNormalBitmap(context, mGestureLockView.getRadius(), normalImageId);
         setPressBitmap(context, mGestureLockView.getRadius(), pressImageId);
@@ -103,6 +106,13 @@ public abstract class Painter {
         mErrorPaint.setColor(errorColor);
     }
 
+    /**
+     * 设置正确状态画笔的颜色  (具体颜色值,不是引用值)
+     * @param rightColor
+     */
+    public void setRightColor(@ColorInt int rightColor){
+        mRightPaint.setColor(rightColor);
+    }
 
     /**
      * 设置正常状态图片
@@ -197,6 +207,13 @@ public abstract class Painter {
                             drawErrorPoint(point, canvas, mErrorPaint);
                         }
                         break;
+                    case Point.POINT_RIGHT_STATUS: // 正确状态的点
+                        if (mErrorBitmap != null) {
+                            drawBitmap(point, point.radius, mErrorBitmap, canvas, mRightPaint);
+                        } else {
+                            drawRightPoint(point, canvas, mRightPaint);
+                        }
+                        break;
                 }
             }
         }
@@ -254,6 +271,16 @@ public abstract class Painter {
      */
     public abstract void drawErrorPoint(Point point, Canvas canvas, Paint errorPaint);
 
+
+    /**
+     * 绘制出正确状态的点
+     *
+     * @param point      单位点
+     * @param canvas     画布
+     * @param rightPaint 正确状态画笔
+     */
+    public abstract void drawRightPoint(Point point, Canvas canvas, Paint rightPaint);
+
     /** ********************************** 连线的绘制方法（↓） **************************************/
 
     /**
@@ -285,6 +312,12 @@ public abstract class Painter {
                 errorPaint.setStyle(Paint.Style.STROKE);
                 errorPaint.setStrokeWidth(lineSize);
                 canvas.drawPath(path, errorPaint);
+                break;
+            case Point.POINT_RIGHT_STATUS: // 正确状态
+                Paint rightPaint = new Paint(mRightPaint);
+                rightPaint.setStyle(Paint.Style.STROKE);
+                rightPaint.setStrokeWidth(lineSize);
+                canvas.drawPath(path, rightPaint);
                 break;
         }
     }

@@ -83,4 +83,22 @@ public class GestureLockPainter extends Painter {
         errorPaint.setStyle(style);
         errorPaint.setStrokeWidth(originStrokeWidth);
     }
+
+
+    @Override
+    public void drawRightPoint(Point point, Canvas canvas, Paint rightPaint) {
+        // 1.记录画笔的原始属性（绘制过程中需要修改的属性）,绘制结束时进行还原
+        Paint.Style style = rightPaint.getStyle();
+        float originStrokeWidth = rightPaint.getStrokeWidth();
+        // 2.绘制实心点
+        rightPaint.setStyle(Paint.Style.FILL);
+        canvas.drawCircle(point.x, point.y, point.radius / 3, rightPaint);
+        // 3.绘制空心圆
+        rightPaint.setStyle(Paint.Style.STROKE);
+        rightPaint.setStrokeWidth(point.radius / 16);
+        canvas.drawCircle(point.x, point.y, point.radius, rightPaint);
+        // 4.结束绘制，还原画笔属性
+        rightPaint.setStyle(style);
+        rightPaint.setStrokeWidth(originStrokeWidth);
+    }
 }

@@ -60,4 +60,9 @@ public class JDFinancePainter extends Painter {
         errorPaint.setAlpha(255);
         canvas.drawCircle(point.x, point.y, point.radius / 3.0F, errorPaint);
     }
+
+    @Override
+    public void drawRightPoint(Point point, Canvas canvas, Paint errorPaint) {
+
+    }
 }

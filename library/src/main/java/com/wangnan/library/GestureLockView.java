@@ -122,11 +122,12 @@ public class GestureLockView extends View {
     private boolean mIsLineTop;
 
     /**
-     * 正常 & 按下 & 错误等状态下画笔的颜色值
+     * 正常 & 按下 & 错误 & 正确等状态下画笔的颜色值
      */
     private int mNormalColor;
     private int mPressColor;
     private int mErrorColor;
+    private int mRightColor;
 
     /**
      * 正常 & 按下 & 错误等状态下的图片资源ID（使用图片代替代码绘制，懒人福利O(∩_∩)O哈哈~）
@@ -182,6 +183,7 @@ public class GestureLockView extends View {
         mNormalColor = array.getColor(R.styleable.GestureLockView_normal_color, Painter.NORMAL_COLOR);
         mPressColor = array.getColor(R.styleable.GestureLockView_press_color, Painter.PRESS_COLOR);
         mErrorColor = array.getColor(R.styleable.GestureLockView_error_color, Painter.ERROR_COLOR);
+        mRightColor = array.getColor(R.styleable.GestureLockView_right_color, Painter.RIGHT_COLOR);
         mIsShowGuides = array.getBoolean(R.styleable.GestureLockView_is_show_guides, false);
         mIsLineTop = array.getBoolean(R.styleable.GestureLockView_is_line_top, false);
         mIsUseAnimation = array.getBoolean(R.styleable.GestureLockView_is_use_animation, false);
@@ -250,7 +252,7 @@ public class GestureLockView extends View {
     private void initPainter() {
         // 使Painter关联当前手势解锁视图
         mPainter.attach(this, getContext(),
-                mNormalColor, mPressColor, mErrorColor,
+                mNormalColor, mPressColor, mErrorColor ,mRightColor,
                 mNormalImageId, mPressImageId, mErrorImageId);
     }
 
@@ -555,6 +557,17 @@ public class GestureLockView extends View {
     }
 
     /**
+     * 设置正确状态的画笔颜色
+     *
+     * @param rightColor 出错状态的颜色值
+     */
+    public void setRightColor(@ColorInt int rightColor) {
+        this.mRightColor = rightColor;
+        mPainter.setRightColor(rightColor);
+        postInvalidate();
+    }
+
+    /**
      * 设置是否显示辅助线
      *
      * @param isShowGuides 是否显示辅助线（true显示,false隐藏）
@@ -707,6 +720,17 @@ public class GestureLockView extends View {
     }
 
     /**
+     * 显示正确状态
+     */
+    public void showRightStatus() {
+        isErrorStatus = false;
+        for (Point point : mPressPoints) {
+            point.status = Point.POINT_RIGHT_STATUS;
+        }
+        postInvalidate();
+    }
+
+    /**
      * 显示错误状态（持续millisecond毫秒后还原至初始状态）
      *
      * @param millisecond 持续时间
@@ -717,6 +741,23 @@ public class GestureLockView extends View {
             @Override
             public void run() {
                 if (isErrorStatus) {
+                    clearView();
+                }
+            }
+        }, millisecond);
+    }
+
+    /**
+     * 显示正确状态（持续millisecond毫秒后还原至初始状态）
+     *
+     * @param millisecond 持续时间
+     */
+    public void showRightStatus(long millisecond) {
+        showRightStatus();
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (!isErrorStatus) {
                     clearView();
                 }
             }

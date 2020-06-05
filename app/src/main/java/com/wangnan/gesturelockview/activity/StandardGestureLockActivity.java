@@ -79,9 +79,9 @@ public class StandardGestureLockActivity extends AppCompatActivity {
             public void onComplete(String result) {
                 if (TextUtils.isEmpty(result)) {
                     return;
-                } else if ("012345678".equals(result)) {
+                } else if ("012468".equals(result)) {
                     Toast.makeText(StandardGestureLockActivity.this, "密码正确O(∩_∩)O~", Toast.LENGTH_SHORT).show();
-                    mGestureLockView.clearView();
+                    mGestureLockView.showRightStatus(1000);
                 } else {
                     Toast.makeText(StandardGestureLockActivity.this, "密码错误o(╯□╰)o~", Toast.LENGTH_SHORT).show();
                     mGestureLockView.showErrorStatus(1000);
@@ -109,6 +109,7 @@ public class StandardGestureLockActivity extends AppCompatActivity {
                     mGestureLockView.setNormalColor(Painter.NORMAL_COLOR);
                     mGestureLockView.setPressColor(Painter.PRESS_COLOR);
                     mGestureLockView.setErrorColor(Painter.ERROR_COLOR);
+                    mGestureLockView.setRightColor(Painter.RIGHT_COLOR);
                 }
             }
         });

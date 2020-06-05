@@ -41,4 +41,9 @@ public class System360Painter extends Painter {
     public void drawErrorPoint(Point point, Canvas canvas, Paint errorPaint) {
         canvas.drawCircle(point.x, point.y, point.radius / 4.0F, errorPaint);
     }
+
+    @Override
+    public void drawRightPoint(Point point, Canvas canvas, Paint rightPaint) {
+
+    }
 }

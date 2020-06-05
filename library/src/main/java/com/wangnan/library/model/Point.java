@@ -12,6 +12,7 @@ public class Point {
     public static final int POINT_NORMAL_STATUS = 0x0001; // 正常状态
     public static final int POINT_PRESS_STATUS = 0x0002; // 按下状态
     public static final int POINT_ERROR_STATUS = 0x0003; // 出错状态
+    public static final int POINT_RIGHT_STATUS = 0x0004; // 正确状态
 
     /**
      * 单位点的圆心坐标和半径

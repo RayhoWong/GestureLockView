@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/AndroidProjects-GestureLockView.iml" filepath="$PROJECT_DIR$/AndroidProjects-GestureLockView.iml" group="GestureLockView" />
       <module fileurl="file://$PROJECT_DIR$/GestureLockView.iml" filepath="$PROJECT_DIR$/GestureLockView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/GestureLockView-app.iml" filepath="$PROJECT_DIR$/app/GestureLockView-app.iml" group="GestureLockView/app" />
+      <module fileurl="file://$PROJECT_DIR$/library/GestureLockView-library.iml" filepath="$PROJECT_DIR$/library/GestureLockView-library.iml" group="GestureLockView/library" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
     </modules>

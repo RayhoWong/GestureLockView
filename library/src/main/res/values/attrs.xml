@@ -12,6 +12,8 @@
         <attr name="press_color" format="color|reference" />
         <!-- 出错状态画笔颜色 -->
         <attr name="error_color" format="color|reference" />
+        <!-- 正确状态画笔颜色 -->
+        <attr name="right_color" format="color|reference" />
         <!-- 是否显示辅助线 -->
         <attr name="is_show_guides" format="boolean" />
         <!-- 连线是否绘制在顶部 -->
